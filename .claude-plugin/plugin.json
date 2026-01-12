@@ -1,0 +1,10 @@
+{
+  "name": "icon-new",
+  "description": "Generate icons using the icon.new AI service",
+  "version": "1.0.0",
+  "author": {
+    "name": "ndx"
+  },
+  "homepage": "https://icon.new",
+  "keywords": ["icon", "icons", "ai", "design", "generator"]
+}
