@@ -102,20 +102,20 @@ curl -s -X POST https://icon.new/api/v1/generate \
 ```
 
 ### Download Icons
-The API returns direct URLs for each icon. Download them with curl:
+The API returns direct URLs for each icon. Append the file extension for the format you need:
 
 ```bash
-# Download as SVG (default)
-curl -s "https://icon.new/api/v1/icons/ICON_ID" -o icon.svg
+# Download as SVG
+curl -s "https://icon.new/api/v1/icons/ICON_ID.svg" -o icon.svg
 
 # Download as PNG
-curl -s "https://icon.new/api/v1/icons/ICON_ID?format=png" -o icon.png
+curl -s "https://icon.new/api/v1/icons/ICON_ID.png" -o icon.png
 
 # Download as ICO (for favicons)
-curl -s "https://icon.new/api/v1/icons/ICON_ID?format=ico" -o favicon.ico
+curl -s "https://icon.new/api/v1/icons/ICON_ID.ico" -o favicon.ico
 ```
 
-Supported formats: `svg` (default), `png`, `ico`
+Supported formats: `.svg`, `.png`, `.ico`
 
 ### Check Credits First
 The response includes credit information. If you need to generate many icons across multiple calls, check the credits in the first response before making additional calls.
