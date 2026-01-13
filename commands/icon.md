@@ -33,9 +33,11 @@ Generate an icon based on the user's description: "$ARGUMENTS"
    }
    ```
 
-5. Download icons to the user's project:
+5. Download icons to the user's project. Append `?format=png` or `?format=ico` if needed:
    ```bash
    curl -s "https://icon.new/api/v1/icons/ICON_ID" -o icon.svg
+   curl -s "https://icon.new/api/v1/icons/ICON_ID?format=png" -o icon.png
+   curl -s "https://icon.new/api/v1/icons/ICON_ID?format=ico" -o favicon.ico
    ```
 
 6. Tell the user:
