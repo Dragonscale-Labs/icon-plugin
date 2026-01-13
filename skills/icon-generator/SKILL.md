@@ -89,9 +89,43 @@ Before using this skill, the user must:
 
 If the API key is not set, remind the user to configure it.
 
+## Best Practices
+
+### Batch Multiple Icons
+When the user needs multiple icons, use a single API call with the `count` parameter instead of making separate calls.
+
+```bash
+curl -s -X POST https://icon.new/api/v1/generate \
+  -H "Authorization: Bearer $ICON_NEW_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "funny cat", "count": 3}'
+```
+
+### Download Icons
+The API returns direct URLs for each icon. Download them with curl:
+
+```bash
+# Download a single icon
+curl -s "https://icon.new/api/v1/icons/ICON_ID" -o icon.svg
+
+# Download multiple icons from a response
+curl -s -X POST https://icon.new/api/v1/generate \
+  -H "Authorization: Bearer $ICON_NEW_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "icon description", "count": 3}' \
+  | jq -r '.icons[].url' | while read -r url; do \
+    id=$(basename "$url"); \
+    curl -s "$url" -o "$id.svg"; \
+  done
+```
+
+### Check Credits First
+The response includes credit information. If you need to generate many icons across multiple calls, check the credits in the first response before making additional calls.
+
 ## After Generation
 
 After successfully generating icons:
-1. Parse the JSON response to extract the icon URLs
-2. Present the download URLs to the user
-3. Optionally offer to download the icons to their project using curl or wget
+1. The icons are already saved as SVG files in the current directory
+2. Tell the user where the files were saved
+3. Offer to move them to a specific location in their project
+4. The SVG files can be used directly in HTML (`<img src="icon.svg">`) or embedded inline

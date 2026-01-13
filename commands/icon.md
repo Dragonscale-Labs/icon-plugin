@@ -10,26 +10,37 @@ Generate an icon based on the user's description: "$ARGUMENTS"
 
 1. First, check if the `ICON_NEW_API_KEY` environment variable is set by running:
    ```bash
-   echo ${ICON_NEW_API_KEY:+API key is set}
+   test -n "$ICON_NEW_API_KEY" && echo "API key is set" || echo "API key not set"
    ```
 
 2. If not set, inform the user they need to:
    - Get an API key from https://icon.new/dashboard
    - Set it with: `export ICON_NEW_API_KEY="icon_your_api_key_here"`
 
-3. If the API key is set, generate the icon by calling the API:
+3. If the API key is set, generate the icon(s). Use the `count` parameter if multiple icons are needed (max 4 per call):
    ```bash
    curl -s -X POST https://icon.new/api/v1/generate \
      -H "Authorization: Bearer $ICON_NEW_API_KEY" \
      -H "Content-Type: application/json" \
-     -d '{"prompt": "USER_PROMPT_HERE"}'
+     -d '{"prompt": "USER_PROMPT_HERE", "count": 1}'
    ```
 
-4. Parse the JSON response and present:
-   - The icon download URL(s)
-   - Remaining credits
+4. Parse the JSON response. Each icon has a `url` field with a direct download link:
+   ```json
+   {
+     "icons": [{"id": "abc123", "url": "https://icon.new/api/v1/icons/abc123", "prompt": "..."}],
+     "credits": {"used": 1, "remaining": 5}
+   }
+   ```
 
-5. Ask if the user wants to download the icon to a specific location in their project.
+5. Download icons to the user's project:
+   ```bash
+   curl -s "https://icon.new/api/v1/icons/ICON_ID" -o icon.svg
+   ```
+
+6. Tell the user:
+   - Which files were saved and where
+   - Remaining credits
 
 ## Parameter Hints
 
