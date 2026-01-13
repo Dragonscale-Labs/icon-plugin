@@ -16,6 +16,7 @@ Generate an icon based on the user's description: "$ARGUMENTS"
 2. If not set, inform the user they need to:
    - Get an API key from https://icon.new/dashboard
    - Set it with: `export ICON_NEW_API_KEY="icon_your_api_key_here"`
+   - Or use x402 for pay-per-request ($0.35 USDC per icon, no account needed)
 
 3. If the API key is set, generate the icon(s). Use the `count` parameter if multiple icons are needed (max 4 per call):
    ```bash

@@ -18,17 +18,17 @@ Use this skill when the user:
 
 **Endpoint:** `POST https://icon.new/api/v1/generate`
 
-**Authentication:** Bearer token required. The API key should be stored in the environment variable `ICON_NEW_API_KEY`.
+**Authentication:** Bearer token via `ICON_NEW_API_KEY` environment variable, or x402 payment.
 
 ## How to Generate Icons
 
-Use the Bash tool to call the API with curl:
+Use curl to call the API:
 
 ```bash
 curl -X POST https://icon.new/api/v1/generate \
   -H "Authorization: Bearer $ICON_NEW_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "ICON_DESCRIPTION", "size": SIZE, "style": "STYLE", "count": COUNT}'
+  -d '{"prompt": "ICON_DESCRIPTION", "count": COUNT}'
 ```
 
 ## Parameters
@@ -36,79 +36,53 @@ curl -X POST https://icon.new/api/v1/generate \
 | Parameter | Required | Description |
 |-----------|----------|-------------|
 | `prompt` | Yes | Description of the icon (max 100 characters) |
-| `size` | No | Icon size in pixels: 256, 512, or 1024 (default: 1024) |
-| `style` | No | Icon style: outline, filled, flat, gradient, or isometric (default: outline) |
 | `count` | No | Number of icons to generate: 1-4 (default: 1) |
-
-## Available Styles
-
-- **outline**: Simple line-based icons
-- **filled**: Solid filled icons
-- **flat**: Flat design icons
-- **gradient**: Icons with gradient fills
-- **isometric**: 3D isometric style icons
 
 ## Response Format
 
-The API returns JSON with:
-- `icons`: Array of generated icons with `id`, `url`, and `prompt`
-- `credits`: Current credit usage statistics
+```json
+{
+  "icons": [
+    {
+      "id": "uuid",
+      "url": "https://icon.new/api/v1/icons/uuid",
+      "prompt": "rocket launching into space"
+    }
+  ],
+  "credits": {
+    "used": 1,
+    "remaining": 42
+  }
+}
+```
 
 ## Example Usage
 
 Generate a single rocket icon:
 ```bash
-curl -X POST https://icon.new/api/v1/generate \
+curl -s -X POST https://icon.new/api/v1/generate \
   -H "Authorization: Bearer $ICON_NEW_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"prompt": "rocket launching into space"}'
 ```
 
-Generate multiple gradient-style icons:
-```bash
-curl -X POST https://icon.new/api/v1/generate \
-  -H "Authorization: Bearer $ICON_NEW_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"prompt": "shopping cart", "style": "gradient", "count": 3, "size": 512}'
-```
-
-## Error Handling
-
-| Status | Meaning |
-|--------|---------|
-| 401 | Invalid or missing API key |
-| 402 | Insufficient credits |
-| 400 | Invalid parameters (check prompt length, size, style values) |
-| 500 | Server error |
-
-## Setup Requirements
-
-Before using this skill, the user must:
-1. Get an API key from https://icon.new/dashboard
-2. Set the environment variable: `export ICON_NEW_API_KEY="icon_your_api_key_here"`
-
-If the API key is not set, remind the user to configure it.
-
-## Best Practices
-
-### Batch Multiple Icons
-When the user needs multiple icons, use a single API call with the `count` parameter instead of making separate calls.
-
+Generate multiple variations:
 ```bash
 curl -s -X POST https://icon.new/api/v1/generate \
   -H "Authorization: Bearer $ICON_NEW_API_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"prompt": "funny cat", "count": 3}'
+  -d '{"prompt": "shopping cart", "count": 3}'
 ```
 
-### Download Icons
-The API returns direct URLs for each icon. Append the file extension for the format you need:
+## Download Icons
+
+The API returns URLs for each icon. Append the file extension for the format you need:
 
 ```bash
-# Download as SVG
+# Download as SVG (vector, best for web)
 curl -s "https://icon.new/api/v1/icons/ICON_ID.svg" -o icon.svg
 
-# Download as PNG
+# Download as PNG (raster)
 curl -s "https://icon.new/api/v1/icons/ICON_ID.png" -o icon.png
 
 # Download as ICO (for favicons)
@@ -117,13 +91,48 @@ curl -s "https://icon.new/api/v1/icons/ICON_ID.ico" -o favicon.ico
 
 Supported formats: `.svg`, `.png`, `.ico`
 
+## Error Handling
+
+| Status | Meaning |
+|--------|---------|
+| 401 | Invalid or missing API key |
+| 402 | Insufficient credits (or x402 payment required) |
+| 400 | Invalid parameters (check prompt length) |
+| 500 | Server error |
+
+## Pricing
+
+### With API Key (Credits)
+- **Espresso**: $5 for 15 credits
+- **Latte**: $15 for 50 credits
+- **Nitro**: $30 for 100 credits
+
+1 credit = 1 icon. Credits never expire.
+
+### Without API Key (x402)
+**$0.35 USDC** per icon on Base mainnet.
+No account needed — pay directly per request via [x402](https://x402.org).
+
+## Setup Requirements
+
+Before using this skill, the user must either:
+1. Get an API key from https://icon.new/dashboard and set `ICON_NEW_API_KEY`
+2. Or use x402 for pay-per-request (no API key needed)
+
+If the API key is not set, remind the user to configure it or mention the x402 option.
+
+## Best Practices
+
+### Batch Multiple Icons
+When the user needs multiple icons, use a single API call with the `count` parameter instead of making separate calls.
+
 ### Check Credits First
-The response includes credit information. If you need to generate many icons across multiple calls, check the credits in the first response before making additional calls.
+The response includes credit information. Check remaining credits before making additional calls.
 
 ## After Generation
 
 After successfully generating icons:
-1. The icons are already saved as SVG files in the current directory
+1. Download the icons using the URLs from the response
 2. Tell the user where the files were saved
 3. Offer to move them to a specific location in their project
-4. The SVG files can be used directly in HTML (`<img src="icon.svg">`) or embedded inline
+4. SVG files can be used directly in HTML (`<img src="icon.svg">`) or embedded inline
