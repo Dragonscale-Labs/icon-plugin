@@ -54,6 +54,6 @@ If the user didn't specify, you can ask about:
 
 ## Example Prompts
 
-- `/icon-new:icon rocket ship`
-- `/icon-new:icon shopping cart --style gradient --size 512`
-- `/icon-new:icon user profile avatar`
+- `/icon-new:icon rocket ship with confetti fuel`
+- `/icon-new:icon shopping cart full of toys`
+- `/icon-new:icon cute alien user avatar`
