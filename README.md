@@ -49,28 +49,6 @@ Claude will automatically use the icon generator skill when you ask to create ic
 - "Create a gradient-style shopping cart icon"
 - "I need an isometric database icon for my project"
 
-## Options
-
-| Option | Values | Default |
-|--------|--------|---------|
-| Style | outline, filled, flat, gradient, isometric | outline |
-| Size | 256, 512, 1024 | 1024 |
-| Count | 1-4 | 1 |
-
-## Pricing
-
-### With API Key (Credits)
-- **Espresso**: $5 for 15 credits
-- **Latte**: $15 for 50 credits
-- **Nitro**: $30 for 100 credits
-
-1 credit = 1 icon. Credits never expire.
-Buy more at [icon.new/pricing](https://icon.new/pricing)
-
-### Without API Key (x402)
-Pay **$0.35 USDC** per icon on Base mainnet via [x402](https://x402.org).
-No account needed — just make a request and pay on-chain.
-
 ## Plugin Structure
 
 ```

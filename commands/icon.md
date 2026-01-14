@@ -45,13 +45,6 @@ Generate an icon based on the user's description: "$ARGUMENTS"
    - Which files were saved and where
    - Remaining credits
 
-## Parameter Hints
-
-If the user didn't specify, you can ask about:
-- **Style**: outline (default), filled, flat, gradient, or isometric
-- **Size**: 256, 512, or 1024 pixels
-- **Count**: 1-4 icons to generate
-
 ## Example Prompts
 
 - `/icon-new:icon rocket ship with confetti fuel`
