@@ -21,7 +21,7 @@ export ICON_NEW_API_KEY="icon_your_api_key_here"
 
 **Option A: Test locally during development**
 ```bash
-claude --plugin-dir /path/to/icon-new-tool
+claude --plugin-dir /path/to/icon-new-plugin
 ```
 
 **Option B: Install from a marketplace**
@@ -33,12 +33,12 @@ claude --plugin-dir /path/to/icon-new-tool
 
 ### Slash Command
 
-Use the `/icon-new:icon` command followed by your icon description:
+Use the `/icon:new` command followed by your icon description:
 
 ```
-/icon-new:icon rocket launching into space
-/icon-new:icon shopping cart
-/icon-new:icon user profile avatar
+/icon:new rocket launching into space
+/icon:new shopping cart
+/icon:new user profile avatar
 ```
 
 ### Natural Language
@@ -56,7 +56,7 @@ icon-new-plugin/
 ├── .claude-plugin/
 │   └── plugin.json      # Plugin manifest
 ├── commands/
-│   └── icon.md          # /icon-new:icon slash command
+│   └── icon.md          # /icon slash command
 ├── skills/
 │   └── icon-generator/
 │       └── SKILL.md     # Icon generation skill

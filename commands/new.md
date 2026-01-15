@@ -47,6 +47,6 @@ Generate an icon based on the user's description: "$ARGUMENTS"
 
 ## Example Prompts
 
-- `/icon-new:icon rocket ship with confetti fuel`
-- `/icon-new:icon shopping cart full of toys`
-- `/icon-new:icon cute alien user avatar`
+- `/icon:new rocket ship with confetti fuel`
+- `/icon:new shopping cart full of toys`
+- `/icon:new cute alien user avatar`
